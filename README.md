@@ -63,7 +63,7 @@ The system enables efficient management of books, members, borrowing, returns, a
 ![Login Page](frontend/public/Screenshots/loginpage.png)
 
 📌 **Admin Dashboard**  
-![Admin Dashboard](D:\Library-Management-System-with-Real-Time-Inventory-and-Lending_August_2025\frontend\public\Screenshots\books.png)
+![Admin Dashboard](frontend/public/Screenshots/librariandashboard.png)
 
 📌 **Book Management**  
 ![Book Management](frontend/public/Screenshots/books.png)
