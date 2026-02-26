@@ -60,19 +60,19 @@ The system enables efficient management of books, members, borrowing, returns, a
 ## 🖼️ Screenshots
 
 📌 **Login Page**  
-![Login Page](frontend/public/Screenshots/loginpage.png)
+![Login Page](./Screenshots/loginpage.png)
 
 📌 **Admin Dashboard**  
-![Admin Dashboard](frontend/public/Screenshots/librariandashboard.png)
+![Admin Dashboard](./Screenshots/librariandashboard.png)
 
 📌 **Book Management**  
-![Book Management](frontend/public/Screenshots/books.png)
+![Book Management](./Screenshots/books.png)
 
 📌 **Member Dashboard**  
-![Member Dashboard](frontend/public/Screenshots/memberdashboard.png)
+![Member Dashboard](./Screenshots/memberdashboard.png)
 
 📌 **Chatbot**  
-![Chatbot](frontend/public/Screenshots/chatbot.png)
+![Chatbot](./Screenshots/chatbot.png)
 
 ---
 
