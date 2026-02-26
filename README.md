@@ -60,19 +60,19 @@ The system enables efficient management of books, members, borrowing, returns, a
 ## 🖼️ Screenshots
 
 📌 **Login Page**  
-_Add screenshot here_
+![Login Page](frontend/public/Screenshots/loginpage.png)
 
 📌 **Admin Dashboard**  
-_Add screenshot here_
+![Admin Dashboard](D:\Library-Management-System-with-Real-Time-Inventory-and-Lending_August_2025\frontend\public\Screenshots\books.png)
 
 📌 **Book Management**  
-_Add screenshot here_
+![Book Management](frontend/public/Screenshots/books.png)
 
 📌 **Member Dashboard**  
-_Add screenshot here_
+![Member Dashboard](frontend/public/Screenshots/memberdashboard.png)
 
 📌 **Chatbot**  
-_Add screenshot here_
+![Chatbot](frontend/public/Screenshots/chatbot.png)
 
 ---
 
