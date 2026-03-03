@@ -1,6 +1,6 @@
 // PaymentModal.jsx
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 export default function PaymentModal({
   open,
@@ -22,7 +22,7 @@ export default function PaymentModal({
     setError("");
     setLoading(true);
     try {
-      const res = await axios.put(`/api/membership-requests/${requestId}/pay`);
+      const res = await api.put(`/membership-requests/${requestId}/pay`);
       setLoading(false);
       onSuccess && onSuccess(res.data);
       onClose();

@@ -1,6 +1,5 @@
 // src/components/FinePaymentPage.jsx
 import { useState } from "react";
-import axios from "axios";
 import {
   Crown,
   Sparkles,
@@ -9,6 +8,7 @@ import {
   ShieldCheck,
   Coins,
 } from "lucide-react";
+import api from "../api";
 
 export default function FinePaymentPage({
   userId,
@@ -36,14 +36,11 @@ export default function FinePaymentPage({
       await loadRazorpay("https://checkout.razorpay.com/v1/checkout.js");
 
       // 2️⃣ Create fine order in backend
-      const orderRes = await axios.post(
-        "http://localhost:8080/api/payments/order/fine",
-        {
-          userId: Number(userId),
-          borrowId: requestId, // ✅ Must be borrowId to match backend
-          amount,
-        }
-      );
+      const orderRes = await api.post("/payments/order/fine", {
+        userId: Number(userId),
+        borrowId: requestId, // ✅ Must be borrowId to match backend
+        amount,
+      });
 
       const { orderId, currency, key, amount: amountInPaise } = orderRes.data;
       if (!orderId || !key) throw new Error("Backend order creation failed");
@@ -69,9 +66,9 @@ export default function FinePaymentPage({
             };
 
             // 5️⃣ Send success event to backend
-            const successRes = await axios.post(
-              "http://localhost:8080/api/payments/fine-success",
-              payload
+            const successRes = await api.post(
+              "/payments/fine-success",
+              payload,
             );
 
             console.log("Fine payment success response:", successRes.data);

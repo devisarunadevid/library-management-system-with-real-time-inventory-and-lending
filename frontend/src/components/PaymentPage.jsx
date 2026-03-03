@@ -1,5 +1,5 @@
 import { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   Crown,
   Sparkles,
@@ -30,7 +30,7 @@ export default function PaymentPage({ userId, requestId, amount }) {
       await loadRazorpay("https://checkout.razorpay.com/v1/checkout.js");
 
       // 2️⃣ Create order from backend
-      const res = await axios.post("http://localhost:8080/api/payments/order", {
+      const res = await api.post("/payments/order", {
         userId,
         membershipRequestId: requestId, // ✅ must match backend param
         amount, // send in rupees
@@ -50,16 +50,13 @@ export default function PaymentPage({ userId, requestId, amount }) {
         handler: async function (response) {
           try {
             // 4️⃣ Verify payment with backend
-            const successRes = await axios.post(
-              "http://localhost:8080/api/payments/success",
-              {
-                userId,
-                requestId,
-                razorpay_order_id: response.razorpay_order_id,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-              }
-            );
+            const successRes = await api.post("/payments/success", {
+              userId,
+              requestId,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+            });
             console.log("Backend success response:", successRes.data);
             alert("🎉 Payment Successful — Membership Activated!");
           } catch (err) {
