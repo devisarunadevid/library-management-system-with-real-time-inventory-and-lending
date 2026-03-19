@@ -1,6 +1,6 @@
 // AdminAlerts.jsx
 import React, { useEffect, useState, useCallback } from "react";
-import api from "../api";
+import api from "../services/api";
 import {
   AlertTriangle,
   BookOpen,

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import api from "../api";
+import api from "../services/api";
 import { Settings2, IndianRupee } from "lucide-react";
 
 export default function AdminFineConfig() {
