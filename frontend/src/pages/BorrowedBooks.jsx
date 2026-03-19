@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { borrowService } from "../services/borrowService";
 import overdueService from "../services/overdueService";
 import FinePaymentPage from "../components/FinePaymentPage";
-import api from "../api";
+import api from "../services/api";
 import {
   BookOpen,
   CalendarClock,
@@ -264,7 +264,7 @@ export default function BorrowedBooksPage() {
               {borrowedBooks.map((b) => {
                 const dueDate = b.dueDate ? new Date(b.dueDate) : null;
                 const today = new Date();
-                const diffDays =
+                const _diffDays =
                   dueDate !== null
                     ? Math.floor((today - dueDate) / (1000 * 60 * 60 * 24))
                     : 0;
