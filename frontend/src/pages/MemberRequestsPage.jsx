@@ -1,6 +1,6 @@
 // src/pages/MemberRequestsPage.jsx
 import { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { useNavigate } from "react-router-dom";
 import PaymentPage from "../components/PaymentPage";
 import { Crown, IndianRupee, CalendarClock, BadgeCheck } from "lucide-react";
@@ -21,10 +21,9 @@ export default function MemberRequestsPage() {
           return;
         }
 
-        const res = await axios.get(
-          `http://localhost:8080/api/membership-requests/my?userId=${userId}`,
-          { withCredentials: true }
-        );
+        const res = await api.get(`/membership-requests/my`, {
+          params: { userId },
+        });
 
         // Minimal change: auto-mark ₹0 approved requests as paid
         const data = (Array.isArray(res.data) ? res.data : []).map((req) => {
@@ -174,7 +173,7 @@ export default function MemberRequestsPage() {
                       <BadgeCheck className="h-4 w-4 text-amber-300" />
                       <span
                         className={`inline-flex items-center rounded-xl border px-2 py-0.5 text-xs ${tone(
-                          req.status
+                          req.status,
                         )}`}
                       >
                         {req.status}
@@ -218,7 +217,7 @@ export default function MemberRequestsPage() {
           amount={selectedRequest.amount}
           onSuccess={(updated) =>
             setRequests((prev) =>
-              prev.map((r) => (r.id === updated.id ? updated : r))
+              prev.map((r) => (r.id === updated.id ? updated : r)),
             )
           }
         />

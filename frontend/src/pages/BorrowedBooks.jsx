@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { borrowService } from "../services/borrowService";
 import overdueService from "../services/overdueService";
 import FinePaymentPage from "../components/FinePaymentPage";
-import axios from "axios";
+import api from "../api";
 import {
   BookOpen,
   CalendarClock,
@@ -64,7 +64,7 @@ export default function BorrowedBooksPage() {
           }
 
           const match = overdueList?.find(
-            (o) => o.id === b.id || o.borrowId === b.id || o.borrow_id === b.id
+            (o) => o.id === b.id || o.borrowId === b.id || o.borrow_id === b.id,
           );
 
           if (match) {
@@ -112,17 +112,13 @@ export default function BorrowedBooksPage() {
 
   const renewBook = async (borrowId) => {
     try {
-      const res = await axios.post(
-        `http://localhost:8080/api/borrow/renew/${borrowId}`,
-        {},
-        { withCredentials: true }
-      );
+      const res = await api.post(`/borrow/renew/${borrowId}`);
       const { newDueDate } = res.data;
       const renewCount = res.data.renewCount ?? res.data.renew_count ?? 0;
       setBorrowedBooks((prev) =>
         prev.map((b) =>
-          b.id === borrowId ? { ...b, dueDate: newDueDate, renewCount } : b
-        )
+          b.id === borrowId ? { ...b, dueDate: newDueDate, renewCount } : b,
+        ),
       );
     } catch (err) {
       console.error("Renew error:", err);
@@ -296,7 +292,7 @@ export default function BorrowedBooksPage() {
                   "| Fine:",
                   fine,
                   "| Paid:",
-                  isPaid
+                  isPaid,
                 );
 
                 return (
@@ -415,7 +411,7 @@ export default function BorrowedBooksPage() {
                           !b.finePaid &&
                           !paidFines.includes(b.id) &&
                           ["OVERDUE", "DAMAGED", "LOST"].includes(
-                            computedStatus?.toUpperCase()
+                            computedStatus?.toUpperCase(),
                           ) && (
                             <FinePaymentPage
                               userId={userId}
@@ -425,8 +421,10 @@ export default function BorrowedBooksPage() {
                                 setPaidFines((prev) => [...prev, b.id]);
                                 setBorrowedBooks((prev) =>
                                   prev.map((x) =>
-                                    x.id === b.id ? { ...x, finePaid: true } : x
-                                  )
+                                    x.id === b.id
+                                      ? { ...x, finePaid: true }
+                                      : x,
+                                  ),
                                 );
                               }}
                             >

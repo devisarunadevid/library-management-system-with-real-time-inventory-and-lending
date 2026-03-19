@@ -360,7 +360,7 @@ export default function MemberPage() {
                             <tr key={txn.id} className="text-brown-900">
                               <td className="px-3 py-2 rounded-l-xl bg-white/80 border border-white/30">
                                 {new Date(
-                                  txn.issueDate || txn.requestDate
+                                  txn.issueDate || txn.requestDate,
                                 ).toLocaleString()}
                               </td>
                               <td className="px-3 py-2 bg-white/80 border border-white/30">

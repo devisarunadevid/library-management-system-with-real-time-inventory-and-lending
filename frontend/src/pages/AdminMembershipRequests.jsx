@@ -1,6 +1,6 @@
 // AdminMembershipRequests.jsx
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   Crown,
   RefreshCw,
@@ -21,7 +21,7 @@ export default function AdminMembershipRequests() {
   const fetchRequests = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get("/api/membership-requests");
+      const res = await api.get("/membership-requests");
       setRequests(res.data || []);
       setError("");
     } catch (err) {
@@ -38,7 +38,7 @@ export default function AdminMembershipRequests() {
 
   const handleApprove = async (id) => {
     try {
-      await axios.put(`/api/membership-requests/${id}/approve`);
+      await api.put(`/membership-requests/${id}/approve`);
       fetchRequests();
     } catch (err) {
       console.error("Error approving request:", err);
@@ -50,11 +50,9 @@ export default function AdminMembershipRequests() {
     const reason = prompt("Enter rejection reason:");
     if (!reason) return;
     try {
-      await axios.put(
-        `/api/membership-requests/${id}/reject?reason=${encodeURIComponent(
-          reason
-        )}`
-      );
+      await api.put(`/membership-requests/${id}/reject`, null, {
+        params: { reason },
+      });
       fetchRequests();
     } catch (err) {
       console.error("Error rejecting request:", err);
@@ -192,8 +190,8 @@ export default function AdminMembershipRequests() {
                         req.status === "APPROVED"
                           ? "before:bg-emerald-500"
                           : req.status === "REJECTED"
-                          ? "before:bg-rose-500"
-                          : "before:bg-amber-500";
+                            ? "before:bg-rose-500"
+                            : "before:bg-amber-500";
                       return (
                         <tr
                           key={req.id ?? idx}

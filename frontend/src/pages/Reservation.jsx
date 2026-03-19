@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { BookOpen, CalendarClock, Timer, XCircle } from "lucide-react";
 
 export default function Reservation() {
   const [reservations, setReservations] = useState([]);
 
   useEffect(() => {
-    axios
-      .get("/api/reservations/user")
+    api
+      .get("/reservations/user")
       .then((res) => setReservations(res.data))
       .catch((err) => console.log(err));
   }, []);
 
   const cancelReservation = (id) => {
-    axios
-      .post(`/api/reservations/cancel/${id}`)
+    api
+      .post(`/reservations/cancel/${id}`)
       .then(() => setReservations((prev) => prev.filter((r) => r.id !== id)))
       .catch((err) => alert(err.response?.data || err.message));
   };

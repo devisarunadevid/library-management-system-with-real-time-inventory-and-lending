@@ -77,7 +77,7 @@ export default function MemberTransactions() {
     }).length;
     const totalFine = records.reduce(
       (a, r) => a + (Number(r.fineAmount) || 0),
-      0
+      0,
     );
     return { count, overdue, totalFine };
   }, [records, now]);
@@ -89,7 +89,7 @@ export default function MemberTransactions() {
         currency: "INR",
         maximumFractionDigits: 0,
       }),
-    []
+    [],
   );
 
   return (

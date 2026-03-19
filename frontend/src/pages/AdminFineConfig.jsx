@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../api";
 import { Settings2, IndianRupee } from "lucide-react";
 
 export default function AdminFineConfig() {
@@ -7,8 +7,8 @@ export default function AdminFineConfig() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8080/api/config/fine")
+    api
+      .get("/config/fine")
       .then((res) => setFine(res.data))
       .catch((err) => console.error("Error fetching fine", err))
       .finally(() => setLoading(false));
@@ -16,7 +16,7 @@ export default function AdminFineConfig() {
 
   const handleSave = async () => {
     try {
-      await axios.post("http://localhost:8080/api/config/fine", null, {
+      await api.post("/config/fine", null, {
         params: { fine },
       });
       alert("Fine updated successfully ✅");

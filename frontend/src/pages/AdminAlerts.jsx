@@ -1,6 +1,6 @@
 // AdminAlerts.jsx
 import React, { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import api from "../api";
 import {
   AlertTriangle,
   BookOpen,
@@ -21,7 +21,7 @@ export default function AdminAlerts() {
     try {
       setErr("");
       setLoading(true);
-      const res = await axios.get("/api/books/low-stock");
+      const res = await api.get("/books/low-stock");
       setLowStock(res.data || []);
     } catch {
       setErr("Failed to load low stock books");
@@ -34,7 +34,7 @@ export default function AdminAlerts() {
     fetchLowStock();
   }, [fetchLowStock]);
 
-  const fmt = (v) => (v ?? v === 0 ? String(v) : "—");
+  const fmt = (v) => ((v ?? v === 0) ? String(v) : "—");
 
   return (
     <div className="min-h-screen w-full relative">
@@ -170,13 +170,13 @@ export default function AdminAlerts() {
                         const badge = danger
                           ? "bg-rose-100 text-rose-700 border-rose-300"
                           : warn
-                          ? "bg-amber-100 text-amber-700 border-amber-300"
-                          : "bg-emerald-100 text-emerald-700 border-emerald-300";
+                            ? "bg-amber-100 text-amber-700 border-amber-300"
+                            : "bg-emerald-100 text-emerald-700 border-emerald-300";
                         const leftAccent = danger
                           ? "before:bg-rose-400"
                           : warn
-                          ? "before:bg-amber-400"
-                          : "before:bg-emerald-500";
+                            ? "before:bg-amber-400"
+                            : "before:bg-emerald-500";
                         return (
                           <tr
                             key={b.id ?? idx}
@@ -213,8 +213,8 @@ export default function AdminAlerts() {
                                   danger
                                     ? "Out of stock"
                                     : warn
-                                    ? "Low stock"
-                                    : "Sufficient stock"
+                                      ? "Low stock"
+                                      : "Sufficient stock"
                                 }
                               >
                                 {fmt(b.availableCopies)}

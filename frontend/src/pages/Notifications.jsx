@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../services/api";
 import { Bell } from "lucide-react";
 
 export default function Notifications() {
@@ -9,8 +9,8 @@ export default function Notifications() {
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get("/api/notifications")
+    api
+      .get("/notifications")
       .then((res) => setNotifications(res.data || []))
       .catch((e) => setErr("Failed to load notifications"))
       .finally(() => setLoading(false));

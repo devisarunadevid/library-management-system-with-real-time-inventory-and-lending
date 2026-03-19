@@ -34,7 +34,7 @@ export default function NotificationsPage() {
     try {
       await notificationService.markAsRead(id);
       setNotifications((prev) =>
-        prev.map((n) => (n.id === id ? { ...n, read: true } : n))
+        prev.map((n) => (n.id === id ? { ...n, read: true } : n)),
       );
     } catch (e) {
       console.error(e);
@@ -45,7 +45,7 @@ export default function NotificationsPage() {
     const unread = notifications.filter((n) => !n.read);
     try {
       await Promise.all(
-        unread.map((n) => notificationService.markAsRead(n.id))
+        unread.map((n) => notificationService.markAsRead(n.id)),
       );
       setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
     } catch (e) {

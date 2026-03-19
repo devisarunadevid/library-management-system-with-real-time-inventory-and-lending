@@ -98,7 +98,7 @@ export default function TransactionsPage() {
     } catch (err) {
       console.warn("Notification failed", err);
       alert(
-        "Notification failed (server may not support notifications endpoint)"
+        "Notification failed (server may not support notifications endpoint)",
       );
     }
   };

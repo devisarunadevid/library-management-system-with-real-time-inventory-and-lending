@@ -56,7 +56,7 @@ export default function OfflinePaymentForm() {
 
           setMembershipRequests(filtered);
           setSelectedRequestId(
-            filtered[0]?.id ?? filtered[0]?.membershipRequestId ?? ""
+            filtered[0]?.id ?? filtered[0]?.membershipRequestId ?? "",
           );
         } else {
           const allFines = (await offlinePaymentService.getUnpaidFines()) || [];
@@ -102,7 +102,7 @@ export default function OfflinePaymentForm() {
         await offlinePaymentService.payMembershipOffline(
           selectedRequestId,
           numericAmount,
-          librarian.id
+          librarian.id,
         );
       } else {
         if (!selectedBorrowId)
@@ -110,7 +110,7 @@ export default function OfflinePaymentForm() {
         await offlinePaymentService.payFineOffline(
           selectedBorrowId,
           numericAmount,
-          librarian.id
+          librarian.id,
         );
       }
 
