@@ -34,7 +34,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/payments")
-@CrossOrigin(origins = "http://localhost:5173") // adjust to your front-end origin
 public class PaymentController {
 
     private final Logger log = LoggerFactory.getLogger(PaymentController.class);
