@@ -12,10 +12,15 @@ public class CorsConfig {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
+
                 registry.addMapping("/api/**")
-                        .allowedOrigins("http://localhost:5173") // React dev server
-                        .allowedMethods("GET", "POST", "PUT", "DELETE")
-                        .allowCredentials(true); // important for cookies
+                        .allowedOrigins(
+                                "http://localhost:5173",
+                                "https://library-management-system-with-real.vercel.app"
+                        )
+                        .allowedMethods("*")   // allow all methods
+                        .allowedHeaders("*")   // allow all headers
+                        .allowCredentials(true);
             }
         };
     }
