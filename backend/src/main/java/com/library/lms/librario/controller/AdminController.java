@@ -22,10 +22,6 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/admin")
-@CrossOrigin(origins = {
-    "http://localhost:5173",
-    "https://library-management-system-with-real.vercel.app"
-})
 public class AdminController {
 
     @Autowired
