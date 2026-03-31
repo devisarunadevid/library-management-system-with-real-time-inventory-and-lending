@@ -27,17 +27,18 @@ export default function MemberBooksPage() {
       let data;
       const hasFilters =
         filters.title || filters.author || filters.genre || filters.publisher;
-      if (!hasFilters) {
-        data = await bookService.getAll();
-      } else {
-        const normalizedFilters = {
-          title: filters.title?.trim().toLowerCase() || "",
-          author: filters.author?.trim().toLowerCase() || "",
-          genre: filters.genre?.trim().toLowerCase() || "",
-          publisher: filters.publisher?.trim().toLowerCase() || "",
-        };
-        data = await bookService.searchAdvanced(normalizedFilters);
-      }
+      const normalizedFilters = {
+        title: filters.title?.trim().toLowerCase() || "",
+        author: filters.author?.trim().toLowerCase() || "",
+        genre: filters.genre?.trim().toLowerCase() || "",
+        publisher: filters.publisher?.trim().toLowerCase() || "",
+      };
+      data = !hasFilters
+        ? await bookService.getAll()
+        : await bookService.searchAdvanced(normalizedFilters);
+
+      console.log("Books API Response:", data); // ✅ Added for diagnostics
+
       const booksArray = Array.isArray(data) ? data : data.content || [];
       setBooks(booksArray);
     } catch (err) {

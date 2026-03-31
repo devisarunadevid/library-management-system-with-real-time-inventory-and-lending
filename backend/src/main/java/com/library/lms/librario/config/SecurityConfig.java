@@ -72,7 +72,7 @@ public class SecurityConfig {
                         // ✅ Role-based secured endpoints
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/librarian/**").hasAnyRole("LIBRARIAN","ADMIN")
-                        .requestMatchers("/api/books/**").hasAnyRole("ADMIN","LIBRARIAN","MEMBER")
+                        .requestMatchers("/api/books", "/api/books/**").hasAnyRole("ADMIN","LIBRARIAN","MEMBER")
 
                         // ✅ Everything else requires login
                         .anyRequest().authenticated()
