@@ -6,12 +6,12 @@ const base = "/borrow-requests";
 const transactionService = {
   getPending: async () => {
     const res = await api.get(`${base}/pending`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   getByUser: async (userId) => {
     const res = await api.get(`${base}/user/${userId}`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   requestBorrow: async (userId, bookId) => {

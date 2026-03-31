@@ -12,15 +12,20 @@ export const borrowService = {
   // --- Student: borrow history ---
   userHistory: async (userId) => {
     const res = await api.get(`/borrow/history/${userId}`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   // --- Admin: pending requests ---
-  getPendingRequests: async () =>
-    (await api.get("/borrow/requests/pending")).data,
+  getPendingRequests: async () => {
+    const res = await api.get("/borrow/requests/pending");
+    return Array.isArray(res.data) ? res.data : [];
+  },
 
   // --- Admin: all requests ---
-  getAllRequests: async () => (await api.get("/borrow/requests")).data,
+  getAllRequests: async () => {
+    const res = await api.get("/borrow/requests");
+    return Array.isArray(res.data) ? res.data : [];
+  },
 
   // --- Admin: approve/reject ---
   approve: async (requestId) =>
@@ -57,10 +62,9 @@ export const borrowService = {
     return res.data;
   },
 
-  // --- Librarian: get all borrow records ---
   getAllRecords: async () => {
     const res = await api.get("/borrow/records/all");
-    return res.data; // ✅ unwraps ResponseEntity<List<BorrowRecordDTO>>
+    return Array.isArray(res.data) ? res.data : []; // ✅ always return array
   },
 
   // --- Librarian: confirm return ---

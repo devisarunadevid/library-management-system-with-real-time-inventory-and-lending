@@ -70,9 +70,12 @@ export default function MemberPage() {
     loadHistory();
   }, []);
 
+  const safeHistory = Array.isArray(borrowHistory) ? borrowHistory : [];
+  const safeOverdue = Array.isArray(overdueList) ? overdueList : [];
+
   const totalFines =
-    borrowHistory.reduce((acc, b) => acc + (b.fineAmount || 0), 0) +
-    overdueList.reduce((acc, o) => acc + (o.fineAmount || 0), 0);
+    safeHistory.reduce((acc, b) => acc + (b.fineAmount || 0), 0) +
+    safeOverdue.reduce((acc, o) => acc + (o.fineAmount || 0), 0);
 
   const markRead = async (id) => {
     try {
@@ -218,7 +221,7 @@ export default function MemberPage() {
                       </p>
                     </div>
                     <p className="text-3xl font-extrabold mt-2 text-brown-900">
-                      {borrowHistory.length}
+                      {safeHistory.length}
                     </p>
                   </div>
                   <div className="rounded-3xl border border-white/30 bg-white/40 backdrop-blur-2xl p-6 text-brown-900 shadow-[0_12px_40px_rgba(0,0,0,0.18)] hover:shadow-[0_20px_60px_rgba(0,0,0,0.25)] transition-all">
@@ -251,10 +254,10 @@ export default function MemberPage() {
                   </p>
                   <div className="mt-2 text-brown-800 space-y-1">
                     <p>Borrowing Limit: {member?.borrowingLimit ?? 0} books</p>
-                    <p>Books Borrowed: {borrowHistory.length}</p>
+                    <p>Books Borrowed: {safeHistory.length}</p>
                     <p>
                       Remaining:{" "}
-                      {(member?.borrowingLimit ?? 0) - borrowHistory.length}
+                      {(member?.borrowingLimit ?? 0) - safeHistory.length}
                     </p>
                   </div>
                   <div className="mt-4 flex flex-wrap gap-2">
@@ -281,11 +284,11 @@ export default function MemberPage() {
                     </span>
                     <h2 className="text-xl font-bold">Borrow History</h2>
                   </div>
-                  {borrowHistory.length === 0 ? (
+                  {safeHistory.length === 0 ? (
                     <p className="text-brown-800/80">No borrow history yet.</p>
                   ) : (
                     <div className="grid gap-2">
-                      {borrowHistory.map((record) => (
+                      {safeHistory.map((record) => (
                         <div
                           key={record.id}
                           className="flex justify-between items-center rounded-xl border border-white/30 bg-white/60 p-3 shadow hover:shadow-md transition"
@@ -311,8 +314,8 @@ export default function MemberPage() {
                     <h2 className="text-xl font-bold">Your Borrowed Books</h2>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {borrowHistory.length > 0 ? (
-                      borrowHistory.map((b) => (
+                    {safeHistory.length > 0 ? (
+                      safeHistory.map((b) => (
                         <div
                           key={b.id}
                           className="group relative overflow-hidden rounded-3xl border border-white/30 bg-white/70 backdrop-blur-2xl p-5 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_20px_60px_rgba(0,0,0,0.28)] text-center"
@@ -486,7 +489,7 @@ export default function MemberPage() {
                         role="MEMBER"
                         context={{
                           borrowedBooks: borrowHistory.map((b) => b.bookTitle),
-                          overdueInfo: overdueList.reduce((acc, o) => {
+                          overdueInfo: safeOverdue.reduce((acc, o) => {
                             acc[o.bookTitle] = o.fineAmount || 0;
                             return acc;
                           }, {}),
