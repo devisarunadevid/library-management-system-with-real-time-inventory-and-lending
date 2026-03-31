@@ -99,7 +99,11 @@ public class AuthController {
 
             if (!passwordMatches) {
                 System.out.println("❌ Password does not match!");
-                return ResponseEntity.status(401).body(Map.of("error", "Invalid credentials"));
+                return ResponseEntity.status(401).body(Map.of(
+                    "error", "Invalid credentials",
+                    "dbHashLength", user.getPassword() != null ? String.valueOf(user.getPassword().length()) : "null",
+                    "inputLen", req.getPassword() != null ? String.valueOf(req.getPassword().length()) : "null"
+                ));
             }
 
             // 3. Fallback to manual authentication context if BCrypt matched correctly.
