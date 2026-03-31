@@ -104,7 +104,7 @@ public class AuthController {
 
             // 3. Fallback to manual authentication context if BCrypt matched correctly.
             // This prevents obscure Spring Security AuthenticationManager misconfigurations from blocking valid logins
-            GrantedAuthority authority = new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName().name());
+            org.springframework.security.core.GrantedAuthority authority = new org.springframework.security.core.authority.SimpleGrantedAuthority("ROLE_" + user.getRole().getRoleName().name());
             Authentication authentication = new UsernamePasswordAuthenticationToken(user.getEmail(), user.getPassword(), java.util.List.of(authority));
 
             SecurityContext context = SecurityContextHolder.createEmptyContext();
