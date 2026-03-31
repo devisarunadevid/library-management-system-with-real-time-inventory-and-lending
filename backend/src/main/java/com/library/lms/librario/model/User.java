@@ -43,7 +43,7 @@ public class User {
     @JoinColumn(name = "membership_plan_id")  // foreign key in users table
     private MembershipPlan membershipPlan;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
