@@ -1,0 +1,37 @@
+  % Total    % Received % Xferd  Average Speed  Time    Time    Time   Current
+                                 Dload  Upload  Total   Spent   Left   Speed
+  0      0   0      0   0      0      0      0                              0* Host library-management-system-with-real-time-inventory-and-lending.onrender.com:443 was resolved.
+* IPv6: (none)
+* IPv4: 216.24.57.251, 216.24.57.7
+*   Trying 216.24.57.251:443...
+*   Trying 216.24.57.7:443...
+* schannel: disabled automatic use of client certificate
+* ALPN: curl offers http/1.1
+* ALPN: server accepted http/1.1
+* Established connection to library-management-system-with-real-time-inventory-and-lending.onrender.com (216.24.57.251 port 443) from 192.168.1.4 port 55737 
+  0      0   0      0   0      0      0      0           00:01              0* using HTTP/1.x
+> GET /api/books/count HTTP/1.1
+> Host: library-management-system-with-real-time-inventory-and-lending.onrender.com
+> User-Agent: curl/8.18.0
+> Accept: */*
+> 
+* Request completely sent off
+* schannel: remote party requests renegotiation
+* schannel: renegotiating SSL/TLS connection
+* schannel: SSL/TLS connection renegotiated
+< HTTP/1.1 404 Not Found
+< Date: Tue, 31 Mar 2026 11:46:07 GMT
+< Content-Type: text/plain; charset=utf-8
+< Content-Length: 10
+< Connection: keep-alive
+< CF-RAY: 9e4f1c98dd7b7e67-MAA
+< x-content-type-options: nosniff
+< x-render-routing: no-server
+< cf-cache-status: DYNAMIC
+< Server: cloudflare
+< alt-svc: h3=":443"; ma=86400
+< 
+{ [10 bytes data]
+100     10 100     10   0      0      5      0   00:02   00:01   00:01      5100     10 100     10   0      0      5      0   00:02   00:01   00:01      5100     10 100     10   0      0      5      0   00:02   00:01   00:01      5
+* Connection #0 to host library-management-system-with-real-time-inventory-and-lending.onrender.com:443 left intact
+Not Found
