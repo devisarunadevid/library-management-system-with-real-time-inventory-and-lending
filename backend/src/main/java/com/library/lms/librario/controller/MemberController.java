@@ -74,8 +74,8 @@ public class MemberController {
     }
 
     // Endpoint to get member profile by email (logged-in user)
-    @GetMapping("/profile/{email}")
-    public ResponseEntity<MemberDTO> getProfile(@PathVariable String email) {
+    @GetMapping("/profile/{email:.+}")
+    public ResponseEntity<MemberDTO> getProfile(@PathVariable("email") String email) {
         MemberDTO dto = memberService.getMemberProfile(email);
         return ResponseEntity.ok(dto);
     }

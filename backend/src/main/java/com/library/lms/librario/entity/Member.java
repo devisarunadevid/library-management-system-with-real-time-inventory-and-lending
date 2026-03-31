@@ -25,8 +25,8 @@ public class Member {
     @JoinColumn(name = "user_id", nullable = false, unique = true) // unique = one-to-one
     private User user;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "membership_plan_id", nullable = false)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "membership_plan_id", nullable = true) // ✅ Allow null for robustness (seeding)
     private MembershipPlan membershipPlan;
 
     private LocalDate startDate;
