@@ -25,6 +25,8 @@ public interface BookRepository extends JpaRepository<Book, Long>, JpaSpecificat
             @Param("genre") String genre,
             @Param("publisher") String publisher);
 
+    boolean existsByIsbn(String isbn);
+
     @Query("SELECT COALESCE(SUM(b.availableCopies), 0) FROM Book b")
     Long sumAvailableCopies();
 }
