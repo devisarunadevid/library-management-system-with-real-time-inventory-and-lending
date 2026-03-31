@@ -50,13 +50,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                // ✅ Disable CSRF only for payment APIs (needed for Razorpay webhooks)
-                .csrf(csrf -> csrf
-                        .ignoringRequestMatchers("/api/payments/**")
-                        .disable()
-                )
-
-                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ Move CORS to the top
+                
+                // ✅ Disable CSRF globally for the API
+                .csrf(csrf -> csrf.disable())
 
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
 
@@ -96,20 +93,23 @@ public class SecurityConfig {
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration configuration = new CorsConfiguration();
+        CorsConfiguration configuration = new CorsConfiguration();
 
-    configuration.setAllowedOrigins(List.of(
-            "http://localhost:5173",
-            "https://library-management-system-with-real.vercel.app"
-    ));
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:5173",
+                "https://library-management-system-with-real.vercel.app",
+                "https://*.vercel.app" // ✅ Allow all Vercel subdomains if needed
+        ));
 
-    configuration.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
-    configuration.setAllowedHeaders(List.of("*"));
-    configuration.setAllowCredentials(true);
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD"));
+        configuration.setAllowedHeaders(List.of("*"));
+        configuration.setExposedHeaders(List.of("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials"));
+        configuration.setAllowCredentials(true);
+        configuration.setMaxAge(3600L); // ✅ Cache preflight response for 1 hour
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", configuration);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
 
-    return source;
-}
+        return source;
+    }
 }
