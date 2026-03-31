@@ -10,4 +10,10 @@ import lombok.NoArgsConstructor;
 public class BookAvailability {
     private long totalBooks;
     private long availableBooks;
+
+    public long getTotalBooks() { return totalBooks; }
+    public void setTotalBooks(long totalBooks) { this.totalBooks = totalBooks; }
+
+    public long getAvailableBooks() { return availableBooks; }
+    public void setAvailableBooks(long availableBooks) { this.availableBooks = availableBooks; }
 }

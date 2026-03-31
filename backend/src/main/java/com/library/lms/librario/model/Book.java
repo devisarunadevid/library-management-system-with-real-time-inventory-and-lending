@@ -12,7 +12,9 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "books")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -72,4 +74,50 @@ public class Book {
         }
         this.status = (availableCopies > 0) ? BookStatus.AVAILABLE : BookStatus.UNAVAILABLE;
     }
+
+    // --- Explicit Getters & Setters ---
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getTitle() { return title; }
+    public void setTitle(String title) { this.title = title; }
+
+    public String getAuthor() { return author; }
+    public void setAuthor(String author) { this.author = author; }
+
+    public String getGenre() { return genre; }
+    public void setGenre(String genre) { this.genre = genre; }
+
+    public String getPublisher() { return publisher; }
+    public void setPublisher(String publisher) { this.publisher = publisher; }
+
+    public Integer getYear() { return year; }
+    public void setYear(Integer year) { this.year = year; }
+
+    public String getIsbn() { return isbn; }
+    public void setIsbn(String isbn) { this.isbn = isbn; }
+
+    public String getShelf() { return shelf; }
+    public void setShelf(String shelf) { this.shelf = shelf; }
+
+    public int getTotalCopies() { return totalCopies; }
+    public void setTotalCopies(int totalCopies) { this.totalCopies = totalCopies; }
+
+    public int getAvailableCopies() { return availableCopies; }
+    public void setAvailableCopies(int availableCopies) { this.availableCopies = availableCopies; }
+
+    public BookStatus getStatus() { return status; }
+    public void setStatus(BookStatus status) { this.status = status; }
+
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+
+    public BookCondition getCondition() { return condition; }
+    public void setCondition(BookCondition condition) { this.condition = condition; }
+
+    public int getVersion() { return version; }
+    public void setVersion(int version) { this.version = version; }
+
+    public String getImageUrl() { return imageUrl; }
+    public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }

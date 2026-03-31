@@ -141,7 +141,11 @@ export default function MemberBooksPage() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-6">
         {!loading && books.length === 0 && (
-          <p className="text-white/90">No books found</p>
+          <div className="col-span-full py-20 text-center">
+            <span className="text-4xl opacity-50">📖</span>
+            <p className="text-white/70 mt-4 text-xl font-medium">No books found in the catalog</p>
+            <p className="text-white/40 text-sm mt-1">Try a different search or check back later!</p>
+          </div>
         )}
         {books.map((b) => {
           const status = String(b.status || "").toUpperCase();
@@ -194,9 +198,9 @@ export default function MemberBooksPage() {
 
                 <div className="min-w-0">
                   <h3 className="text-lg font-extrabold tracking-tight line-clamp-2">
-                    {b.title}
+                    {b.title || "Untitled Book"}
                   </h3>
-                  <p className="text-stone-600">{b.author}</p>
+                  <p className="text-stone-600">{b.author || "Unknown Author"}</p>
                 </div>
               </div>
 
