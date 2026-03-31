@@ -228,4 +228,33 @@ public class MemberServiceImpl implements MemberService {
         });
     }
 
+    @Override
+    public Member createDefaultMember(User user) {
+        // Try to find a "Basic" plan first, else any plan, else null
+        MembershipPlan plan = planRepository.findAll().stream()
+                .filter(p -> p.getType().equalsIgnoreCase("Basic") || p.getType().equalsIgnoreCase("Free"))
+                .findFirst()
+                .orElse(planRepository.findAll().stream().findFirst().orElse(null));
+
+        Member member = new Member();
+        member.setUser(user);
+        member.setMembershipPlan(plan);
+        member.setStartDate(LocalDate.now());
+        
+        if (plan != null) {
+            if (plan.getDurationMonths() > 0) {
+                member.setEndDate(LocalDate.now().plusMonths(plan.getDurationMonths()));
+            } else if (plan.getDurationDays() > 0) {
+                member.setEndDate(LocalDate.now().plusDays(plan.getDurationDays()));
+            } else {
+                member.setEndDate(LocalDate.now().plusYears(1)); // Default 1 year
+            }
+        } else {
+            member.setEndDate(LocalDate.now().plusYears(1));
+        }
+
+        member.setStatus(MemberStatus.ACTIVE);
+        return memberRepository.save(member);
+    }
+
 }

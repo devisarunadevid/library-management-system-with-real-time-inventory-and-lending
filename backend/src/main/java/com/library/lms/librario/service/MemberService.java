@@ -21,6 +21,7 @@ public interface MemberService {
 
     // ✅ Add a helper method here but **do not implement it in interface with repository**
     Member getMemberByUser(User user);
+    Member createDefaultMember(User user);
     List<MemberWithPlanDTO> getMembersWithPlans();
     List<MemberWithPlanDTO> getPremiumMembers();
 

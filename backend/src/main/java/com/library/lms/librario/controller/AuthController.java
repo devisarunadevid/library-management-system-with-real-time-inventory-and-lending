@@ -42,6 +42,7 @@ public class AuthController {
     private final ForgotPasswordService forgotPasswordService;
     private final UserRepository userRepo;
     private final PasswordEncoder encoder;
+    private final com.library.lms.librario.service.MemberService memberService; // Injecting MemberService
     @Autowired private AuthenticationManager authManager;
 
     // ✅ Register
@@ -70,7 +71,11 @@ public class AuthController {
                 .status(true)
                 .build();
 
-        userRepo.save(u);
+        User savedUser = userRepo.save(u);
+        
+        // ✅ Auto-create Member record for dashboard stability
+        memberService.createDefaultMember(savedUser);
+
         return ResponseEntity.ok(Map.of("message", "Registration successful"));
     }
 
