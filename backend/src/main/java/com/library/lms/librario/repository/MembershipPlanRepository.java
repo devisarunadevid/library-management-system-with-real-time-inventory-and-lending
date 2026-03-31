@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MembershipPlanRepository extends JpaRepository<MembershipPlan, Long> {
+    java.util.Optional<MembershipPlan> findByType(String type);
 }

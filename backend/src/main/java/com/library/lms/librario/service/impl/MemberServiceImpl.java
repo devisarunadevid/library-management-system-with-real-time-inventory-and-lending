@@ -234,10 +234,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Member createDefaultMember(User user) {
         // Try to find a "Basic" plan first, else any plan, else null
-        MembershipPlan plan = planRepository.findAll().stream()
-                .filter(p -> p.getType().equalsIgnoreCase("Basic") || p.getType().equalsIgnoreCase("Free"))
-                .findFirst()
-                .orElse(planRepository.findAll().stream().findFirst().orElse(null));
+        MembershipPlan plan = planRepository.findByType("Basic")
+                .orElseGet(() -> planRepository.findAll().stream().findFirst().orElse(null));
 
         Member member = new Member();
         member.setUser(user);
