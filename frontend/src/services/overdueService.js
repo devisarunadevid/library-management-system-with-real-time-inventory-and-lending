@@ -49,7 +49,7 @@ const overdueService = {
   // Get all overdue records with dynamic fines
   getAll: async () => {
     const response = await api.get("/overdue");
-    const data = response.data || [];
+    const data = Array.isArray(response.data) ? response.data : [];
     return data.map((r) => ({
       id: r.id,
       userId: r.userId,
@@ -73,7 +73,7 @@ const overdueService = {
   // Get overdue records for a specific user
   getByUser: async (userId) => {
     const response = await api.get(`/overdue/user/${userId}`);
-    const data = response.data || [];
+    const data = Array.isArray(response.data) ? response.data : [];
     return data.map((r) => ({
       id: r.id,
       userId: r.userId,

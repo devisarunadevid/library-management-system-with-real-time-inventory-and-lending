@@ -7,20 +7,20 @@ const notificationService = {
   // 🔹 Get all notifications for a user
   getByUser: async (userId) => {
     const res = await api.get(`${base}/user/${userId}`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   // 🔹 Get only unread notifications for a user
   getUnread: async (userId) => {
     const res = await api.get(`${base}/unread/${userId}`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   // 🔹 Get admin unread notifications (UPDATED)
   getAdmin: async () => {
     // call the new backend endpoint for admin notifications
     const res = await api.get(`${base}/admin/unread`);
-    return res.data;
+    return Array.isArray(res.data) ? res.data : [];
   },
 
   // 🔹 Mark notification as read
@@ -38,7 +38,7 @@ const notificationService = {
   // 🔹 Get unread count (frontend helper)
   getUnreadCount: async (userId) => {
     const res = await api.get(`${base}/unread/${userId}`);
-    return res.data.length; // return count instead of array
+    return Array.isArray(res.data) ? res.data.length : 0; // return count instead of array
   },
 };
 

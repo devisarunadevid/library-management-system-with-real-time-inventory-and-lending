@@ -168,8 +168,9 @@ public class MemberServiceImpl implements MemberService {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));
 
+        // ✅ "Heal" logic: if member is missing, create a default one on-the-fly
         Member member = memberRepository.findByUserIdWithPlan(user.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("Member not found"));
+                .orElseGet(() -> createDefaultMember(user));
 
         return mapToDTO(member);
     }
