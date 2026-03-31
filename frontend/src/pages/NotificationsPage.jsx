@@ -122,7 +122,7 @@ export default function NotificationsPage() {
         <div
           className="fixed inset-0 -z-10 bg-cover bg-center"
           style={{
-            backgroundImage: `url('/library-bg.jpg')`,
+            backgroundImage: 'url("/bibliolibrary.jpg")',
             backgroundAttachment: "fixed",
           }}
         />
