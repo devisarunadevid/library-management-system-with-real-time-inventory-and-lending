@@ -10,4 +10,17 @@ const api = axios.create({
   },
 });
 
+// ✅ Intercept 401/Unauthorized to redirect to login
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      console.warn("Session expired or unauthorized. Redirecting to login...");
+      localStorage.clear();
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 export default api;
