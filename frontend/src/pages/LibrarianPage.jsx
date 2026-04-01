@@ -28,9 +28,9 @@ function DashboardStats() {
   });
 
   useEffect(() => {
-    fetch("/api/stats")
-      .then((res) => res.json())
-      .then((data) => setStats(data))
+    api
+      .get("/stats")
+      .then((res) => setStats(res.data))
       .catch(() =>
         setStats({ booksIssued: 0, booksReturned: 0, pendingFines: 0 })
       );
