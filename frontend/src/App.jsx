@@ -208,6 +208,7 @@ function AnimatedRoutes() {
             <Route path="notifications" element={<NotificationsPage />} />
             <Route path="offline-payment" element={<OfflinePaymentForm />} />
             <Route path="overdue-books" element={<OverdueBooksPage />} />
+            <Route path="borrow-requests" element={<AdminBorrowRequests />} />
             <Route path="borrow-records" element={<BorrowRecords />} />
           </Route>
 

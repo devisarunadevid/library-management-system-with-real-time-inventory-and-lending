@@ -41,13 +41,15 @@ public class BorrowController {
         return borrowService.requestBorrow(email, bookId);
     }
 
-    // --- ADMIN: Approve borrow request ---
+    // --- ADMIN/LIBRARIAN: Approve borrow request ---
+    @PreAuthorize("hasRole('LIBRARIAN') or hasRole('ADMIN')")
     @PostMapping("/approve/{requestId}")
     public BorrowRecord approveBorrow(@PathVariable Long requestId) {
         return borrowService.approveBorrow(requestId);
     }
 
-    // --- ADMIN: Reject borrow request ---
+    // --- ADMIN/LIBRARIAN: Reject borrow request ---
+    @PreAuthorize("hasRole('LIBRARIAN') or hasRole('ADMIN')")
     @PostMapping("/reject/{requestId}")
     public void rejectBorrow(@PathVariable Long requestId) {
         borrowService.rejectBorrow(requestId);
@@ -103,7 +105,8 @@ public class BorrowController {
         return borrowService.historyForUser(userId);
     }
 
-    // --- ADMIN: View all pending requests ---
+    // --- ADMIN/LIBRARIAN: View all pending requests ---
+    @PreAuthorize("hasRole('LIBRARIAN') or hasRole('ADMIN')")
     @GetMapping("/requests/pending")
     public List<BorrowRequest> getPendingRequests() {
         return borrowService.getPendingRequests();

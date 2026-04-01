@@ -133,6 +133,11 @@ export default function Sidebar({ role }) {
     ],
     LIBRARIAN: [
       { name: "Dashboard", path: "/librarian", icon: LayoutDashboard },
+      {
+        name: "Borrow Requests",
+        path: "/librarian/borrow-requests",
+        icon: ClipboardList,
+      },
       { name: "Notifications", path: "/librarian/notifications", icon: Bell },
       { name: "Manage Books", path: "/librarian/books", icon: NotebookPen },
       {
