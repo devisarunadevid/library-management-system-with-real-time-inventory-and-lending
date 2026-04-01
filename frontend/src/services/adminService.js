@@ -7,10 +7,7 @@ export const adminService = {
   },
 
   addLibrarian: async (librarian) => {
-    const token = localStorage.getItem("token");
-    const res = await api.post("/admin/add-librarian", librarian, {
-      headers: { token },
-    });
+    const res = await api.post("/admin/add-librarian", librarian);
     return res.data;
   },
 

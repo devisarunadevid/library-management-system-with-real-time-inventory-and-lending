@@ -39,10 +39,12 @@ public class AdminController {
 
     // Add Librarian (ADMIN only)
     @PostMapping("/add-librarian")
-    public ResponseEntity<?> addLibrarian(@RequestHeader("token") String token, @RequestBody User user) {
+    public ResponseEntity<?> addLibrarian(@RequestBody User user) {
         if (userRepo.existsByEmail(user.getEmail())) {
             return ResponseEntity.badRequest().body(Map.of("error", "Email already exists"));
         }
+
+        user.setStatus(true); // ✅ Ensure librarian is active
 
         // 1) keep raw password before encoding
         String rawPassword = user.getPassword();
