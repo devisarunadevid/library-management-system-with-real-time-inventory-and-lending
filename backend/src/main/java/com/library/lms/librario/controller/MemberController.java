@@ -57,8 +57,8 @@ public class MemberController {
 
     // ✅ Get Member by ID
     @GetMapping("/{id}")
-    public ResponseEntity<Member> getMemberById(@PathVariable Long id) {
-        return ResponseEntity.ok(memberService.getMemberById(id));
+    public ResponseEntity<MemberDTO> getMemberById(@PathVariable Long id) {
+        return ResponseEntity.ok(memberService.getMemberDTOById(id));
     }
 
     @GetMapping("/me")

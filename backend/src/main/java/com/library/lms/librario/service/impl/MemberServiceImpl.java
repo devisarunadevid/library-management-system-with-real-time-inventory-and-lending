@@ -144,6 +144,11 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public MemberDTO getMemberDTOById(Long id) {
+        return mapToDTO(getMemberById(id));
+    }
+
+    @Override
     public Member getMemberByEmail(String email) {
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found"));

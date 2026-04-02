@@ -14,6 +14,7 @@ public interface MemberService {
     Member updateMember(Long id, MemberUpdateRequest request);
     void deleteMember(Long id);
     Member getMemberById(Long id);
+    MemberDTO getMemberDTOById(Long id);
     List<MemberDTO> getAllMembers();
     Member updateMembership(Long memberId, Long planId);
     MemberDTO getMemberProfile(String email);

@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class OverdueService {
 
     private final BorrowRecordRepository borrowRepo;
