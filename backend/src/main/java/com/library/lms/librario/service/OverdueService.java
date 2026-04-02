@@ -34,15 +34,16 @@ public class OverdueService {
     private final NotificationService notificationService;
     private final MailService mailService;
 
-    public List<BorrowRecord> getOverdueBooks() {
-        LocalDateTime now = LocalDateTime.now();
-
-        return borrowRepo.findByStatus(BorrowStatus.BORROWED)
-                .stream()
-                .filter(r -> r.getDueDate() != null
-                        && r.getReturnDate() == null
-                        && r.getDueDate().isBefore(now))
-                .collect(Collectors.toList());
+    public List<com.library.lms.librario.dto.OverdueDTO> getOverdueDTOsForAll() {
+        return getAllCurrentlyOverdue().stream().map(r -> {
+            long days = 0;
+            if (r.getDueDate() != null) {
+                days = Duration.between(r.getDueDate(), LocalDateTime.now()).toDays();
+                if (days < 0) days = 0;
+            }
+            BigDecimal fine = calculateFine(r);
+            return com.library.lms.librario.dto.OverdueDTO.from(r, days, fine);
+        }).collect(Collectors.toList());
     }
 
     public List<BorrowRecord> getAllCurrentlyOverdue() {
@@ -109,11 +110,18 @@ public class OverdueService {
         return fine;
     }
 
-    public List<BorrowRecord> getOverdueForUser(Long userId) {
+    public List<com.library.lms.librario.dto.OverdueDTO> getOverdueDTOsForUser(Long userId) {
         return getAllCurrentlyOverdue().stream()
                 .filter(r -> r.getUser() != null && r.getUser().getId().equals(userId))
-                .peek(this::calculateFine) // ✅ ensures fine is refreshed
-                .collect(Collectors.toList());
+                .map(r -> {
+                    long days = 0;
+                    if (r.getDueDate() != null) {
+                        days = Duration.between(r.getDueDate(), LocalDateTime.now()).toDays();
+                        if (days < 0) days = 0;
+                    }
+                    BigDecimal fine = calculateFine(r);
+                    return com.library.lms.librario.dto.OverdueDTO.from(r, days, fine);
+                }).collect(Collectors.toList());
     }
 
     public long getBorrowedBooksCount() {

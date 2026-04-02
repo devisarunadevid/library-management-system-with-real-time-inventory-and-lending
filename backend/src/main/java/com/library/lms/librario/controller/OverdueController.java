@@ -52,16 +52,7 @@ public class OverdueController {
     @GetMapping("/user/{userId}")
     @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN','MEMBER')")
     public List<OverdueDTO> getByUser(@PathVariable Long userId) {
-        return overdueService.getOverdueForUser(userId).stream().map(r -> {
-            long days = 0;
-            if (r.getDueDate() != null) {
-                days = Duration.between(r.getDueDate(), LocalDateTime.now()).toDays();
-                if (days < 0) days = 0;
-            }
-
-            BigDecimal fine = overdueService.calculateFine(r);
-            return OverdueDTO.from(r, days, fine);
-        }).collect(Collectors.toList());
+        return overdueService.getOverdueDTOsForUser(userId);
     }
 
     /**

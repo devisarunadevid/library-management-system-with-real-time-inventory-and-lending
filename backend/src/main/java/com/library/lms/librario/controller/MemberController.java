@@ -4,12 +4,14 @@ import com.library.lms.librario.dto.MemberDTO;
 import com.library.lms.librario.dto.MemberRequest;
 import com.library.lms.librario.dto.MemberUpdateRequest;
 import com.library.lms.librario.dto.MemberWithPlanDTO;
+import com.library.lms.librario.dto.OverdueDTO;
 import com.library.lms.librario.entity.Member;
 import com.library.lms.librario.service.MemberService;
 import com.library.lms.librario.service.OverdueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -26,6 +28,7 @@ public class MemberController {
     private OverdueService overdueService;
 
 
+    // ✅ Create Member with Plan Assignment
     // ✅ Create Member with Plan Assignment
     @PostMapping
     public ResponseEntity<Member> createMember(@RequestBody MemberRequest request) {
@@ -81,16 +84,7 @@ public class MemberController {
     }
     @GetMapping("/{id}/overdue")
     public ResponseEntity<List<com.library.lms.librario.dto.OverdueDTO>> getMemberOverdue(@PathVariable Long id) {
-        var list = overdueService.getOverdueForUser(id);
-        var dto = list.stream().map(r -> {
-            long days = 0;
-            if (r.getDueDate() != null) {
-                days = java.time.Duration.between(r.getDueDate(), java.time.LocalDateTime.now()).toDays();
-                if (days < 0) days = 0;
-            }
-            return com.library.lms.librario.dto.OverdueDTO.from(r, days);
-        }).toList();
-        return ResponseEntity.ok(dto);
+        return ResponseEntity.ok(overdueService.getOverdueDTOsForUser(id));
     }
 
     @GetMapping("/withPlans")
