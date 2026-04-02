@@ -73,9 +73,9 @@ export default function MemberPage() {
   const safeHistory = Array.isArray(borrowHistory) ? borrowHistory : [];
   const safeOverdue = Array.isArray(overdueList) ? overdueList : [];
 
-  const totalFines =
-    safeHistory.reduce((acc, b) => acc + (b.fineAmount || 0), 0) +
-    safeOverdue.reduce((acc, o) => acc + (o.fineAmount || 0), 0);
+  // ✅ Use only the overdue list as the single source of truth for fines.
+  // Using both safeHistory + safeOverdue was double-counting the same overdue records.
+  const totalFines = safeOverdue.reduce((acc, o) => acc + (o.fineAmount || 0), 0);
 
   const markRead = async (id) => {
     try {
