@@ -88,6 +88,11 @@ public class OverdueService {
 
         if (daysLate <= 0) return BigDecimal.ZERO;
 
+        // ✅ Add null-safety check for user
+        if (record.getUser() == null) {
+            return BigDecimal.ZERO;
+        }
+
         Member member = memberRepo.findByUser_Id(record.getUser().getId()).orElse(null);
 
         BigDecimal finePerDay = (member != null && member.getMembershipPlan() != null
