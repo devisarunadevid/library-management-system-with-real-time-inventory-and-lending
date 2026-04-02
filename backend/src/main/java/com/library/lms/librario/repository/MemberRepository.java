@@ -19,10 +19,10 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findTopByUser_IdOrderByEndDateDesc(Long userId);
 
     // ✅ Fetch member along with its membership plan to avoid lazy loading issues
-    @Query("SELECT m FROM Member m JOIN FETCH m.membershipPlan WHERE m.id = :id")
+    @Query("SELECT m FROM Member m LEFT JOIN FETCH m.membershipPlan WHERE m.id = :id")
     Optional<Member> findByIdWithPlan(@Param("id") Long id);
 
-    @Query("SELECT m FROM Member m JOIN FETCH m.membershipPlan")
+    @Query("SELECT m FROM Member m LEFT JOIN FETCH m.membershipPlan")
     List<Member> findAllWithPlan();
 
     @Query("SELECT m FROM Member m LEFT JOIN FETCH m.membershipPlan WHERE m.user.id = :userId")

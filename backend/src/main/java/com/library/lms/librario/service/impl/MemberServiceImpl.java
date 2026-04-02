@@ -128,6 +128,15 @@ public class MemberServiceImpl implements MemberService {
             member = memberRepository.findByUserIdWithPlan(id).orElse(null);
         }
 
+        // ✅ "Heal" logic: if it's a valid User but no Member record exists yet
+        if (member == null) {
+            User user = userRepository.findById(id).orElse(null);
+            if (user != null) {
+                // Automagically create a default member profile for this user
+                member = createDefaultMember(user);
+            }
+        }
+
         if (member == null) {
             throw new ResourceNotFoundException("Member not found with id " + id);
         }
