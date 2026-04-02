@@ -39,10 +39,12 @@ public class BorrowRecord {
 
     private double fineAmount;
 
+    @Builder.Default
     @Column(name = "days_overdue")
     private Integer daysOverdue = 0;
 
     // ✅ Add these two fields here
+    @Builder.Default
     @Column(name = "fine_paid")
     private Boolean finePaid = false;
 
@@ -53,6 +55,7 @@ public class BorrowRecord {
     @Column(name = "book_condition") // GOOD, BAD, DAMAGED, LOST
     private BookCondition bookCondition;
 
+    @Builder.Default
     @Column(nullable = false)
     private Integer renewCount = 0;// Use Integer instead of int, default 0
 
