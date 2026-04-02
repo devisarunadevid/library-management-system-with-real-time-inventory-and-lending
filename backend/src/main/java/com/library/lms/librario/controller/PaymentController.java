@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -72,6 +73,7 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
+    @Transactional
     @PostMapping("/order")
     public ResponseEntity<?> createOrder(@RequestBody Map<String, Object> data) {
         log.info("POST /api/payments/order payload: {}", data);
@@ -128,6 +130,7 @@ public class PaymentController {
         }
     }
 
+    @Transactional
     @PostMapping("/success")
     public ResponseEntity<?> paymentSuccess(@RequestBody Map<String, Object> data) {
         log.info("POST /api/payments/success payload: {}", data);
@@ -210,6 +213,7 @@ public class PaymentController {
         }
     }
 
+    @Transactional
     @PostMapping("/webhook")
     public ResponseEntity<String> handleWebhook(@RequestBody String payload,
                                                 @RequestHeader("X-Razorpay-Signature") String signature,
@@ -316,6 +320,7 @@ public class PaymentController {
     }
 
     /** ✅ Mark fine as paid securely after Razorpay success and record it in payments table */
+    @Transactional
     @PostMapping("/fine-success")
     public ResponseEntity<?> finePaymentSuccess(@RequestBody Map<String, Object> body) {
         try {

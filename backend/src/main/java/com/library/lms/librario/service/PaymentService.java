@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class PaymentService {
 
     private final PaymentRepository paymentRepo;
@@ -183,7 +184,6 @@ public class PaymentService {
     // 2️⃣ ONLINE FINE PAYMENT (Razorpay success → already used in controller)
     // =====================================================
 
-    @Transactional
     public Payment markFinePaymentSuccess(Long borrowRecordId, String razorpayPaymentId) {
         BorrowRecord record = borrowRepo.findById(borrowRecordId)
                 .orElseThrow(() -> new IllegalArgumentException("Borrow record not found: " + borrowRecordId));
