@@ -23,13 +23,13 @@ public class BorrowRequestController {
         return service.requestBorrow(userId, bookId); // ✅ match service
     }
 
-    // Admin approves a borrow request
+    // Librarian approves a borrow request
     @PostMapping("/approve/{id}")
     public BorrowRecord approveRequest(@PathVariable Long id) {
         return service.approveBorrow(id);
     }
 
-    // Admin rejects a borrow request
+    // Librarian rejects a borrow request
     @PostMapping("/reject/{id}")
     public BorrowRequest rejectRequest(@PathVariable Long id, @RequestParam String reason) {
         return service.rejectRequest(id, reason);
@@ -48,7 +48,7 @@ public class BorrowRequestController {
         return service.renewBook(id); // matches service method
     }
 
-    // Admin: view pending requests
+    // Librarian: view pending requests
     @GetMapping("/pending")
     public List<BorrowRequest> getPendingRequests() {
         return service.getPendingRequests();

@@ -158,8 +158,7 @@ function AnimatedRoutes() {
             <Route index element={<AdminPage />} />
             <Route path="books" element={<BooksPage />} />
             <Route path="membership-plans" element={<MembershipPlansPage />} />
-            <Route path="add-librarian" element={<LibrariansPage />} />{" "}
-            <Route path="borrow-requests" element={<AdminBorrowRequests />} />
+            <Route path="add-librarian" element={<LibrariansPage />} />
             <Route path="admin-alerts" element={<AdminAlerts />} />
             <Route
               path="membership-requests"

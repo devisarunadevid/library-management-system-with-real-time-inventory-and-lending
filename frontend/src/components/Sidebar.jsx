@@ -118,11 +118,6 @@ export default function Sidebar({ role }) {
         path: "/admin/membership-requests",
         icon: ListChecks,
       },
-      {
-        name: "Borrow Requests",
-        path: "/admin/borrow-requests",
-        icon: ClipboardList,
-      },
       { name: "Add Librarian", path: "/admin/add-librarian", icon: UserPlus },
       {
         name: "Membership Plans",
