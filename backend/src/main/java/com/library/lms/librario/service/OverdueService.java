@@ -194,4 +194,35 @@ public class OverdueService {
     public void runManualProcess() {
         processOverdues();
     }
+
+    /**
+     * Simulation Utility: Forces a book to be 5 days overdue for testing.
+     */
+    @Transactional
+    public BorrowRecord simulateOverdue(Long recordId) {
+        BorrowRecord r = findById(recordId);
+        
+        // Force the due date to be 5 days ago
+        r.setDueDate(LocalDateTime.now().minusDays(5));
+        r.setStatus(BorrowStatus.BORROWED); // Reset to borrowed so processOverdues picks it up
+        
+        // Save and then trigger the calculation
+        borrowRepo.save(r);
+        
+        // Now calculate the fine immediately
+        var fine = calculateFine(r);
+        r.setFineAmount(fine.doubleValue());
+        r.setStatus(BorrowStatus.OVERDUE);
+        
+        BorrowRecord saved = borrowRepo.save(r);
+        
+        // Notify the user instantly
+        User user = r.getUser();
+        if (user != null) {
+            String msg = "TEST SIMULATION: The book '" + r.getBook().getTitle() + "' is now marked as overdue. Fine calculated: " + fine;
+            notificationService.create(user, "MEMBER", msg, NotificationType.GENERAL);
+        }
+        
+        return saved;
+    }
 }

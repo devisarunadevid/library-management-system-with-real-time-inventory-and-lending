@@ -105,4 +105,13 @@ public class OverdueController {
         long count = overdueService.getBorrowedBooksCount();
         return Map.of("count", count);
     }
+
+    /**
+     * Test utility to simulate an overdue situation (for testing).
+     */
+    @PostMapping("/simulate/{borrowId}")
+    @PreAuthorize("hasAnyRole('ADMIN','LIBRARIAN')")
+    public BorrowRecord simulateOverdue(@PathVariable Long borrowId) {
+        return overdueService.simulateOverdue(borrowId);
+    }
 }
