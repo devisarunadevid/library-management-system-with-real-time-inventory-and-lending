@@ -5,6 +5,8 @@ import com.library.lms.librario.entity.PaymentType;
 import com.library.lms.librario.entity.enums.BorrowStatus;
 import com.library.lms.librario.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface BorrowRecordRepository extends JpaRepository<BorrowRecord, Long> {
