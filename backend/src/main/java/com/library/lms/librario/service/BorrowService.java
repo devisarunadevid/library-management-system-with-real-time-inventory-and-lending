@@ -38,6 +38,7 @@ public class BorrowService {
     private final NotificationService notificationService;
     // 🔹 NEW: to store offline fine payments in payments table
     private final PaymentRepository paymentRepo;
+    private final MemberRepository memberRepo;
 
     /** ADMIN: Approve borrow request */
     public BorrowRecord approveBorrow(Long requestId) {
@@ -246,8 +247,14 @@ public class BorrowService {
 
     /** MEMBER: Borrow history */
     public List<BorrowRecordDTO> historyForUser(Long userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepo.findById(userId).orElse(null);
+
+        // ✅ Resilient logic: if not found, check if it's a Member ID
+        if (user == null) {
+            user = memberRepo.findById(userId)
+                    .map(Member::getUser)
+                    .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+        }
 
         List<BorrowRecord> records = recordRepo.findByUserOrderByBorrowDateDesc(user);
 

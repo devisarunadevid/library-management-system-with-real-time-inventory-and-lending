@@ -20,13 +20,16 @@ public class BorrowRequestServiceImpl implements IBorrowRequestService {
     private final BorrowRequestRepository borrowRequestRepo;
     private final BookRepository bookRepo;
     private final UserRepository userRepo;
+    private final MemberRepository memberRepo;
     private final NotificationService notificationService;
 
     /** Member creates a borrow request */
     @Override
     public BorrowRequest requestBorrow(Long userId, Long bookId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
+            user = memberRepo.findById(userId).map(m -> m.getUser()).orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        }
         Book book = bookRepo.findById(bookId)
                 .orElseThrow(() -> new RuntimeException("Book not found"));
 
@@ -62,8 +65,10 @@ public class BorrowRequestServiceImpl implements IBorrowRequestService {
     /** Get all requests by a specific user */
     @Override
     public List<BorrowRequest> getUserRequests(Long userId) {
-        User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepo.findById(userId).orElse(null);
+        if (user == null) {
+            user = memberRepo.findById(userId).map(m -> m.getUser()).orElseThrow(() -> new RuntimeException("User not found: " + userId));
+        }
         return borrowRequestRepo.findByUser(user);
     }
 
