@@ -121,8 +121,17 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Member getMemberById(Long id) {
-        return memberRepository.findByIdWithPlan(id) // use JOIN FETCH query
-                .orElseThrow(() -> new ResourceNotFoundException("Member not found with id " + id));
+        Member member = memberRepository.findByIdWithPlan(id).orElse(null);
+
+        // ✅ Resilient lookup: if not found, check if 'id' is actually a User ID
+        if (member == null) {
+            member = memberRepository.findByUserIdWithPlan(id).orElse(null);
+        }
+
+        if (member == null) {
+            throw new ResourceNotFoundException("Member not found with id " + id);
+        }
+        return member;
     }
 
     @Override

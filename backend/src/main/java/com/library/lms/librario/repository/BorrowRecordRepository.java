@@ -9,7 +9,9 @@ import java.util.List;
 
 public interface BorrowRecordRepository extends JpaRepository<BorrowRecord, Long> {
     long countByUserAndStatus(User user, BorrowStatus status);
-    List<BorrowRecord> findByUserOrderByBorrowDateDesc(User user);
+    @Query("SELECT r FROM BorrowRecord r JOIN FETCH r.book JOIN FETCH r.user WHERE r.user = :user ORDER BY r.borrowDate DESC")
+    List<BorrowRecord> findByUserEager(@Param("user") User user);
+
     List<BorrowRecord> findByStatus(BorrowStatus status);
     List<BorrowRecord> findByUser_Id(Long userId);
     List<BorrowRecord> findByFinePaidTrue();

@@ -1,5 +1,7 @@
 package com.library.lms.librario.service;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import com.library.lms.librario.dto.BorrowRecordDTO;
 import com.library.lms.librario.dto.OfflineFinePaymentRequest;
 import com.library.lms.librario.entity.*;
@@ -26,6 +28,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class BorrowService {
 
     private final BorrowRecordRepository recordRepo;
@@ -256,7 +259,7 @@ public class BorrowService {
                     .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
         }
 
-        List<BorrowRecord> records = recordRepo.findByUserOrderByBorrowDateDesc(user);
+        List<BorrowRecord> records = recordRepo.findByUserEager(user);
 
         return records.stream()
                 .map(r -> new BorrowRecordDTO(
