@@ -30,11 +30,11 @@ export const memberService = {
     return res.data;
   },
 
-  // convenience: fetch currently logged-in user's member record
+  // convenience: fetch currently logged-in user's member record (by email)
   getProfileByLoggedInUser: async () => {
-    const userId = localStorage.getItem("userId");
-    if (!userId) throw new Error("No logged-in userId in localStorage");
-    const res = await api.get(`/members/${userId}`);
+    const email = localStorage.getItem("userEmail");
+    if (!email) throw new Error("No logged-in userEmail in localStorage");
+    const res = await api.get(`/members/profile/${email}`);
     return res.data;
   },
 
