@@ -7,6 +7,7 @@ import com.library.lms.librario.model.User;
 import com.library.lms.librario.repository.BookRepository;
 import com.library.lms.librario.repository.BorrowRequestRepository;
 import com.library.lms.librario.repository.UserRepository;
+import com.library.lms.librario.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
