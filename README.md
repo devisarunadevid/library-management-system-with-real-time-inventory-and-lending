@@ -6,8 +6,8 @@ The system enables efficient management of books, members, borrowing, returns, a
 
 ---
 
-🌐 **Live Demo**  
-🚀 _Deployment link will be added soon_
+🌐 **Live Website**  
+🚀 [Visit Librario Live](https://library-management-system-with-real.vercel.app/)
 
 ---
 
